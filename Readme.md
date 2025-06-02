@@ -1,8 +1,6 @@
 # Jupyter Lab Docker Image
 
-[![Docker Build](https://github.com/ValentinKolb/jupyter/actions/workflows/docker-build.yml/badge.svg)](https://github.com/ValentinKolb/jupyter/actions/workflows/build.yml)
-[![Docker Hub](https://img.shields.io/docker/pulls/valentinkolb/jupyter)](https://ghcr.io/valentinkolb/jupyter)
-[![Docker Image Size](https://img.shields.io/docker/image-size/valentinkolb/jupyter/latest)](https://ghcr.io/valentinkolb/jupyter)
+[![Docker Build](https://github.com/ValentinKolb/jupyter/actions/workflows/build.yml/badge.svg)](https://github.com/ValentinKolb/jupyter/actions/workflows/build.yml)
 
 A Jupyter Lab environment with enhanced development features, scientific computing stack, and LLM integration capabilities.
 
