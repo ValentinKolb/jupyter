@@ -1,0 +1,21 @@
+# Theming
+jupyterlab-fonts
+jupyterthemes
+
+# Jupyter AI
+jupyter-ai[all]
+langchain-ollama
+langchain-anthropic
+langchain-openai
+langchain-google-genai
+
+# Utility packages
+python-dotenv
+
+# Notebook Extensions
+jupyterlab-git
+jupyterlab-lsp
+python-lsp-server[all]
+
+# Memory optimizations
+psutil
