@@ -1,28 +1,41 @@
-name: ci
+name: Docker
 
 on:
   push:
-    branches:
-      - "main"
+    branches: [main]
+    tags:
+      - "v*"
 
 jobs:
-  build-deploy:
+  build-and-push:
     runs-on: ubuntu-latest
-    env:
-      DOCKER_REPOSITORY: ${{ secrets.DOCKERHUB_USERNAME }}
-      IMAGE_NAME: jupyter
-      IMAGE_TAG: ${{ github.run_number }}
-
+    permissions:
+      contents: read
+      packages: write
     steps:
-      - name: Git Checkout
-        uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
-      - name: Build Docker Image
-        run: docker build . --tag $DOCKER_REPOSITORY/$IMAGE_NAME:$GITHUB_RUN_NUMBER --tag $DOCKER_REPOSITORY/$IMAGE_NAME:latest --no-cache
-
-      - name: Login to Docker Hub
+      - name: Set Docker Tag
+        id: set-tag
         run: |
-          echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u $DOCKER_REPOSITORY --password-stdin
+          if [[ $GITHUB_REF == refs/tags/v* ]]; then
+            VERSION=${GITHUB_REF#refs/tags/v}
+            echo "DOCKER_TAGS=ghcr.io/valentinkolb/jupyter:latest,ghcr.io/valentinkolb/jupyter:${VERSION}" >> $GITHUB_ENV
+          else
+            SHA=$(git rev-parse --short HEAD)
+            echo "DOCKER_TAGS=ghcr.io/valentinkolb/jupyter:dev-${SHA}" >> $GITHUB_ENV
+          fi
 
-      - name: Push Image to Docker Hub
-        run: docker push $DOCKER_REPOSITORY/$IMAGE_NAME --all-tags
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          push: true
+          tags: ${{ env.DOCKER_TAGS }}
