@@ -17,7 +17,7 @@ A Jupyter Lab environment with enhanced development features, scientific computi
 ## Quick Start
 
 ```bash
-docker run -p 8888:8888 -v $(pwd):/home/jovyan/work ghcr.io/valentinkolb/jupyter:latest
+docker run -p 8888:8888 -v $(pwd):/home/jovyan ghcr.io/valentinkolb/jupyter:latest
 ```
 
 ### Docker Compose
@@ -29,7 +29,7 @@ services:
     ports:
       - "8888:8888"
     volumes:
-      - ./notebooks:/home/jovyan/work
+      - ./notebooks:/home/jovyan
     environment:
       - JUPYTER_TOKEN=your_secure_token
 ```

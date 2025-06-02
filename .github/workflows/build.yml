@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       DOCKER_REPOSITORY: ${{ secrets.DOCKERHUB_USERNAME }}
-      IMAGE_NAME: homepage
+      IMAGE_NAME: jupyter
       IMAGE_TAG: ${{ github.run_number }}
 
     steps:
