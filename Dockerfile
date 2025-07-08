@@ -1,4 +1,4 @@
-FROM jupyter/scipy-notebook:latest
+FROM jupyter/tensorflow-notebook:latest
 USER jovyan
 
 # copy requirements.txt and install with pip
