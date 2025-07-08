@@ -1,17 +1,20 @@
 FROM jupyter/scipy-notebook:latest
 USER jovyan
 
-# Kopiere und installiere mit pip
+# copy requirements.txt and install with pip
 COPY requirements.txt /tmp/
 RUN pip install --no-cache-dir -r /tmp/requirements.txt
 
-# WICHTIG: Jupyter-Verzeichnisse erstellen und Ownership setzen
+# important: jupyter directory and ownership
 USER root
 
-# Custom Config
+# install dependencies
+RUN apt-get update && apt-get install ffmpeg libsm6 libxext6 -y
+
+# custom config
 COPY overrides.json /opt/conda/share/jupyter/lab/settings/overrides.json
 
-# Ownership nochmal setzen nach Copy
+# set ownership and permissions
 RUN chown -R jovyan:users /home/jovyan/.jupyter
 RUN chmod -R 755 /home/jovyan/.jupyter
 
